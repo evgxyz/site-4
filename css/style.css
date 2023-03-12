@@ -1,0 +1,249 @@
+body {
+  font-size: 1rem;
+  font-family: Verdana, sans-serif;
+  color: #ffffff;
+  margin: 0;
+  padding: 10px;
+  background-color: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, .h1 {
+  font-family: Verdana, sans-serif;
+  font-size: 1.6em;
+}
+
+h2, .h2 {
+  font-family: Verdana, sans-serif;
+  font-size: 1.4em;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.5s, background-color 0.5s;
+}
+a:hover {
+  color: orange;
+  text-decoration: underline;
+  transition: color 0.5s, background-color 0.5s;
+}
+
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+  min-width: 250px;
+  flex-direction: column;
+}
+
+.header {
+  justify-self: flex-start;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.footer {
+  justify-self: flex-end;
+}
+
+.header-body {
+  text-align: center;
+  background-color: #000000;
+}
+.header-body__container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 16px;
+  background-color: #333333;
+  border-radius: 20px 20px 0 0;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 16px;
+}
+.header-body__left {
+  display: flex;
+  align-items: center;
+}
+.header-body__right {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 1rem;
+}
+.logo__link {
+  display: flex;
+  align-items: center;
+  color: orange;
+  text-decoration: none;
+}
+.logo__link:hover {
+  text-decoration: none;
+}
+.logo__image {
+  height: 2.4em;
+}
+.logo__title {
+  margin-left: 16px;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.main-menu {
+  text-align: center;
+  font-size: 1rem;
+  background-color: #000000;
+}
+.main-menu__container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 5px 16px;
+  background-color: #333333;
+  border-radius: 0 0 20px 20px;
+  border-top: 1px solid #555555;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 8px;
+}
+.main-menu__item {
+  display: inline-block;
+  padding: 8px 12px;
+  color: #ffffff;
+  background-color: #444444;
+}
+.main-menu__item:hover {
+  color: orange;
+  background-color: #222222;
+  text-decoration: none;
+}
+
+.main {
+  display: flex;
+  margin-top: 10px;
+  background-color: #000000;
+}
+.main__container {
+  margin: 0 auto;
+  max-width: 900px;
+  flex-grow: 1;
+  background-color: #333333;
+  border-radius: 20px;
+}
+
+.footer {
+  display: flex;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  background-color: #000000;
+}
+.footer__container {
+  margin: 0 auto;
+  max-width: 900px;
+  flex-grow: 1;
+  background-color: #333333;
+  border-radius: 20px;
+}
+.footer__line {
+  padding: 10px;
+  text-align: center;
+}
+
+.ghsearch {
+  margin: 1.5rem 16px;
+}
+.ghsearch__title {
+  text-align: center;
+}
+.ghsearch__form {
+  width: 100%;
+}
+.ghsearch__query-line {
+  display: flex;
+  flex-basis: 100%;
+  flex-shrink: 1;
+  justify-content: center;
+  align-items: flex-start;
+  column-gap: 5px;
+}
+.ghsearch__query-box {
+  width: 70%;
+  max-width: 30rem;
+}
+.ghsearch [name=query] {
+  width: 100%;
+}
+.ghsearch__info--wait {
+  width: 30px;
+  background: center center no-repeat url("../images/wait.gif");
+}
+.ghsearch__result {
+  margin-top: 20px;
+  text-align: center;
+}
+.ghsearch__result-item {
+  display: flex;
+}
+
+.input-text {
+  display: block;
+  margin: 0;
+  padding: 0.5em;
+  font-family: Verdana, sans-serif;
+  font-size: 1rem;
+  color: white;
+  background-color: #222222;
+  border: 1px solid #555555;
+  outline: none;
+  transition: border-color 0.5s;
+}
+.input-text:focus {
+  border-color: #888888;
+  outline: none;
+  transition: border-color 0.5s;
+}
+.input-text:focus::placeholder {
+  opacity: 0;
+}
+.input-text--error {
+  border-color: red;
+}
+
+.input-errormsg {
+  margin-top: 3px;
+  font-size: 0.9em;
+  font-weight: normal;
+  color: red;
+}
+
+.button {
+  display: block;
+  margin: 0;
+  padding: 0.5em 0.7em;
+  font-family: Verdana, sans-serif;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #444444;
+  border: 1px solid #555555;
+  transition-property: color, background-color, border-color;
+  transition-duration: 0.5s;
+}
+.button:hover {
+  color: orange;
+  background-color: #333333;
+  border-color: #888888;
+  cursor: pointer;
+  transition-property: color, background-color, border-color;
+  transition-duration: 0.5s;
+}

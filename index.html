@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="ru">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css"> 
+
+    <script src="js/main.js"></script>
+
+    <title>GithubSearch</title>
+    <meta name="keywords" content="">
+    <meta name="description" content=""> 
+</head>
+<body>
+<div class="page-wrapper"> 
+    <!-- header --> 
+    <header class="header">
+        <!-- header-body --> 
+        <div class="header-body">
+            <div class="header-body__container">
+                <div class="header-body__left">
+                    <div class="logo">
+                        <a href="#" class="logo__link"> 
+                            <img src="images/logo.svg" alt="" class="logo__image">
+                            <div class="logo__title">GithubSearch</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-body__right">
+                    
+                </div>
+            </div>
+        </div>
+        <!-- main-menu -->
+        <div class="main-menu">
+            <div class="main-menu__container">
+                <a href="#0" class="main-menu__item"> 
+                    Главная 
+                </a>
+                <a href="#1" class="main-menu__item">   
+                    Пункт1
+                </a>
+                <a href="#2" class="main-menu__item">
+                    Пункт2
+                </a>
+                <a href="#3" class="main-menu__item">
+                    Пункт3
+                </a>
+                <a href="#4" class="main-menu__item">
+                    Контакты
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main class="main">
+        <div class="main__container">
+            <!-- ghsearch -->
+            <div class="ghsearch">
+                <div class="ghsearch__title">
+                    <h2 class="h2">Поиск по Github</h2>
+                </div>
+                <form action="#" id="ghsearch-form" class="ghsearch__form">
+                    <div class="ghsearch__query-line">
+                        <div class="ghsearch__query-box">
+                            <div><input type="text" name="query" class="input-text"></div>
+                            <div name="query-errormsg" class="input-errormsg"></div>
+                        </div>
+                        <button type="submit" class="button">Найти</button>
+                    </div>                    
+                </form>
+                <div id="ghsearch-result" class="ghsearch__result"></div>
+            </div>
+            <!-- ghsearch -->
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__line">
+                GithubSearch
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
