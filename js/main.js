@@ -45,13 +45,14 @@ function ghsearchFormSubmit(event) {
 
     ghsearch(query);
 
-    document.getElementById('ghsearch-result').innerHTML = 'Подождите...';
+    document.getElementById('ghsearch-result').innerHTML 
+     = '<div class="ghsearch__info ghsearch__info--wait"></div>';
 }
 
 //-----------------------------
 // Выполнить поиск асинхронно
 async function ghsearch(query) {
-    let queryURL = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}`;
+    let queryURL = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&page=2`;
     
     // делаем fetch запрос
     let response;
@@ -81,32 +82,32 @@ async function ghsearch(query) {
 
     console.log('result: ' + JSON.stringify(result, null, 2));
 
+    // оформляем результаты
     let html = '<ol class="ghsearch__result-list">';
     for (let item of result.items) {
         let {
-            name,
-            html_url: rep_html_url,
+            full_name,
+            html_url,
             description,
             owner: { 
-                login, 
-                html_url: user_html_url, 
                 avatar_url 
             },
         } = item;
 
         html += `<li class="ghsearch__result-item">`;
+        html += `<div class="ghsearch__result-item-content">`;
         
         html += `<div class="ghsearch__result-item-left">`;
         if (avatar_url && avatar_url != '')
-            html += `<img src="${avatar_url}" alt="${login}">`;
-        html += `<a href="${user_html_url}">${login}</a>`;
+            html += `<img src="${avatar_url}" alt="${full_name}" class="ghsearch__result-image">`;
         html += `</div>`;
 
         html += `<div class="ghsearch__result-item-right">`;
-        html += `<div><a href="${rep_html_url}">${name}</a></div>`;
-        html += `<div>${description}</div>`;
+        html += `<div class="ghsearch__result-title"><a href="${html_url}">${full_name}</a></div>`;
+        html += `<div class="ghsearch__result-descr">${description}</div>`;
         html += `</div>`;
 
+        html += `</div>`; //item-content
         html += `</li>`;
     }
     html += `</ol>`;

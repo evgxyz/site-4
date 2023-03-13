@@ -15,6 +15,7 @@ $color-warn: red;
 
 $bg-color-0: #000000;
 $bg-color-1: #333333;
+$bg-color-2: #444444;
 
 $brd-color-1: #555555;
 $brd-color-2: orange;
@@ -61,12 +62,12 @@ h2, .h2 {
 }
 
 a {
-    color: $color-1;
+    color: $color-2;
     text-decoration: none;
     transition: color 0.5s, background-color 0.5s;
     
     &:hover {
-        color: $color-2;
+        //color: $color-2;
         text-decoration: underline;
         transition: color 0.5s, background-color 0.5s;
     }
@@ -257,21 +258,67 @@ a {
         width: 100%;
     }
 
+    &__result {
+        margin-top: 20px;
+    }
+
     &__info {
+        margin: 0 auto;
+        text-align: center;
+        
         &--wait {
-            width: 30px;
-            background: center center no-repeat url('../images/wait.gif');
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            background-image: url('../images/wait.gif');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 80% auto;
         }
     }
 
-    &__result {
-        margin-top: 20px;
-        text-align: center;
-        //@include debug-border(red);
+    &__result-list {
+        padding-left: 20px;
     }
 
     &__result-item {
-        display: flex;
+        margin: 10px;
+        padding: 10px;
+        vertical-align: bottom;
+        background-color: $bg-color-2;
+        border: 1px solid $brd-color-1;
+    }
+
+    &__result-item-content {
+        display: inline-flex;
+        vertical-align: top;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+
+    &__result-item-left {
+        flex-shrink: 1;
+        //@include debug-border(red);
+    }
+
+    &__result-item-right {
+        flex-shrink: 1;
+        flex-grow: 1;
+        //@include debug-border(blue);
+    }
+
+    &__result-image {
+        max-width: 100px;
+        background-color: #ffffff;
+    }
+
+    &__result-title {
+        font-weight: bold;
+    }
+
+    &__result-descr {
+        margin-top: 8px;
     }
 }
 
@@ -330,3 +377,19 @@ a {
         transition-duration: 0.5s;
     }
 }   
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-internal-autofill-previewed,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: $input-color-1;
+  -webkit-box-shadow: 0 0 0px 1000px $input-bg-color-1 inset;
+  font-size: inherit !important;
+}
+

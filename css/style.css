@@ -22,12 +22,11 @@ h2, .h2 {
 }
 
 a {
-  color: #ffffff;
+  color: orange;
   text-decoration: none;
   transition: color 0.5s, background-color 0.5s;
 }
 a:hover {
-  color: orange;
   text-decoration: underline;
   transition: color 0.5s, background-color 0.5s;
 }
@@ -184,16 +183,55 @@ a:hover {
 .ghsearch [name=query] {
   width: 100%;
 }
-.ghsearch__info--wait {
-  width: 30px;
-  background: center center no-repeat url("../images/wait.gif");
-}
 .ghsearch__result {
   margin-top: 20px;
+}
+.ghsearch__info {
+  margin: 0 auto;
   text-align: center;
 }
+.ghsearch__info--wait {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  background-image: url("../images/wait.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% auto;
+}
+.ghsearch__result-list {
+  padding-left: 20px;
+}
 .ghsearch__result-item {
-  display: flex;
+  margin: 10px;
+  padding: 10px;
+  vertical-align: bottom;
+  background-color: #444444;
+  border: 1px solid #555555;
+}
+.ghsearch__result-item-content {
+  display: inline-flex;
+  vertical-align: top;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+.ghsearch__result-item-left {
+  flex-shrink: 1;
+}
+.ghsearch__result-item-right {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.ghsearch__result-image {
+  max-width: 100px;
+  background-color: #ffffff;
+}
+.ghsearch__result-title {
+  font-weight: bold;
+}
+.ghsearch__result-descr {
+  margin-top: 8px;
 }
 
 .input-text {
@@ -246,4 +284,19 @@ a:hover {
   cursor: pointer;
   transition-property: color, background-color, border-color;
   transition-duration: 0.5s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-internal-autofill-previewed,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #222222 inset;
+  font-size: inherit !important;
 }
