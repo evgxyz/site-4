@@ -12,8 +12,9 @@ function DOMReady() {
 //-----------------------------
 // Ставим обработчики событий
 function initGhsearch() {
-    document.getElementById('ghsearch-form')
-        .addEventListener('submit', ghsearchFormSubmit);
+    let ghsearchForm = document.getElementById('ghsearch-form');
+    ghsearchForm.addEventListener('submit', ghsearchFormSubmit);
+    ghsearchForm.addEventListener('input', ghsearchFormInput);
 }
 
 //-----------------------------
@@ -32,7 +33,7 @@ function ghsearchFormSubmit(event) {
         errorMsg = 'Запрос пустой';
     } 
     else
-    if (query.length < 3) {
+    if (query.length < 2) {
         valid = false;
         errorMsg = 'Запрос слишком короткий';
     }
@@ -45,14 +46,13 @@ function ghsearchFormSubmit(event) {
 
     ghsearch(query);
 
-    document.getElementById('ghsearch-result').innerHTML 
-     = '<div class="ghsearch__info ghsearch__info--wait"></div>';
+    ghsearchShowInfo('', 'ghsearch__info--wait'); // показываем иконку загрузки
 }
 
 //-----------------------------
 // Выполнить поиск асинхронно
 async function ghsearch(query) {
-    let queryURL = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&page=2`;
+    let queryURL = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&page=1`;
     
     // делаем fetch запрос
     let response;
@@ -60,12 +60,14 @@ async function ghsearch(query) {
         response = await fetch(queryURL);
     }
     catch (err) { // ловим ошибки fetch
+        ghsearchShowInfo('Ошибка при выполнении запроса. Не удалось установить соединение с сервером');
         console.log('fetch error: ' + err);
         return false;
     }
 
     // проверяем, что ответ 200
     if (response.status != 200) {
+        ghsearchShowInfo('Ошибка при выполнении запроса. Ответ сервера ' + response.status);
         console.log('http error: ' + response.status);
         return false;
     }
@@ -76,6 +78,7 @@ async function ghsearch(query) {
         result = await response.json();
     }
     catch (err) { // ловим ошибки распаковки json
+        ghsearchShowInfo('Ошибка при выполнении запроса. Получены неправильные данные');
         console.log('json error: ' + err);
         return false;
     }
@@ -85,14 +88,17 @@ async function ghsearch(query) {
     // оформляем результаты
     let html = '<ol class="ghsearch__result-list">';
     for (let item of result.items) {
-        let {
+        /* let {
             full_name,
             html_url,
             description,
-            owner: { 
-                avatar_url 
-            },
-        } = item;
+            owner: { avatar_url },
+        } = item; */
+
+        let full_name = item.full_name ?? '',
+            html_url = item.html_url ?? '',
+            description = item.description ?? '',
+            avatar_url = item.owner?.avatar_url ?? '';
 
         html += `<li class="ghsearch__result-item">`;
         html += `<div class="ghsearch__result-item-content">`;
@@ -116,4 +122,29 @@ async function ghsearch(query) {
     html += `</ol>`;
 
     document.getElementById('ghsearch-result').innerHTML = html;
+}
+
+//-----------------------------
+// Ввод на форме
+function ghsearchFormInput(event) {
+    let elem = event.target;
+    if (elem.tagName == 'INPUT') { // убираем сообщение об ошибке
+        elem.classList.remove('input-text--error');
+        elem.form.querySelector(`[name="${elem.name}-errormsg"]`).innerHTML = '';
+    }
+}
+
+//-----------------------------
+// функции для показа информации 
+function ghsearchShowInfo(msg, addClassName = '') {
+    let infoElem = document.createElement('div');
+    infoElem.textContent = msg;
+    infoElem.className = 'ghsearch__info';
+    if (addClassName != '') {
+        infoElem.classList.add(addClassName);
+    }
+
+    let resultElem = document.getElementById('ghsearch-result');
+    resultElem.innerHTML = ''; // resultElem.childNodes.forEach(e => e.remove());
+    resultElem.append(infoElem);
 }
