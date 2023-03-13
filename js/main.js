@@ -74,7 +74,7 @@ async function ghsearch(reset, query) {
     }
 
     // добавляем иконку загрузки
-    ghsearchShowInfo('', 'ghsearch__info--wait'); 
+    ghsearchShowInfo('', 'loading'); 
 
     // делаем fetch запрос
     let queryURL = `https://api.github.com/search/repositories?`
@@ -83,16 +83,17 @@ async function ghsearch(reset, query) {
     let response;
     try {
         response = await fetch(queryURL);
+        //throw new Error('x');
     }
     catch (err) { // ловим ошибки fetch
-        ghsearchShowInfo('Ошибка при выполнении запроса. Не удалось установить соединение с сервером');
+        ghsearchShowInfo('Ошибка при выполнении запроса. Не удалось установить соединение с сервером', 'warn');
         console.log('fetch error: ' + err);
         return false;
     }
 
     // проверяем, что ответ 200
     if (response.status != 200) {
-        ghsearchShowInfo('Ошибка при выполнении запроса. Ответ сервера ' + response.status);
+        ghsearchShowInfo('Ошибка при выполнении запроса. Ответ сервера ' + response.status, 'warn');
         console.log('http error: ' + response.status);
         return false;
     }
@@ -103,7 +104,7 @@ async function ghsearch(reset, query) {
         result = await response.json();
     }
     catch (err) { // ловим ошибки распаковки json
-        ghsearchShowInfo('Ошибка при выполнении запроса. Получены неправильные данные');
+        ghsearchShowInfo('Ошибка при выполнении запроса. Получены неправильные данные', 'warn');
         console.log('json error: ' + err);
         return false;
     }
@@ -178,19 +179,33 @@ async function ghsearch(reset, query) {
     // прибавляем страницу
     form.page.value++;
 
-    // функция добавляет информационное сообщение
-    function ghsearchShowInfo(msg, addClassName = '') {
-        // удаляем информационные сообщения
-        ghsearchClearInfo();
+    // функция добавляет информационное сообщение (иконка загрузки или ошибка)
+    function ghsearchShowInfo(msg, icon = '') {
+        // удаляем старое информационное сообщение, если есть
+        document.getElementById('ghsearch-info')?.remove();
         
         // создаем новое информационное сообщение
         let infoElem = document.createElement('DIV');
-        infoElem.textContent = msg;
+        infoElem.id = 'ghsearch-info';
         infoElem.className = 'ghsearch__info';
-        if (addClassName != '') {
-            infoElem.classList.add(addClassName);
+
+        // создаем html информационного блока
+        let infoHTML = '';
+        if (icon != '') {
+            let iconClass = 'ghsearch__info-icon';
+            if (icon == 'loading') {
+                iconClass += ' ghsearch__info-icon--loading';
+            }
+            else {
+                iconClass += ' ghsearch__info-icon--warn';
+            }
+            infoHTML += `<div class="${iconClass}"></div>`;
         }
-        // и добавляем
+        infoHTML += `<div class="ghsearch__info-msg">${escapeHTML(msg)}</div>`;
+
+        infoElem.innerHTML = infoHTML;
+
+        // добавляем
         resultElem.append(infoElem);
     }
 
