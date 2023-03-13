@@ -98,12 +98,15 @@ async function ghsearch(query) {
         html += `<div class="ghsearch__result-item-content">`;
         
         html += `<div class="ghsearch__result-item-left">`;
-        if (avatar_url && avatar_url != '')
-            html += `<img src="${avatar_url}" alt="${full_name}" class="ghsearch__result-image">`;
+        if (avatar_url && avatar_url != '') {
+            html += `<a href="${html_url}" target="_blank">`
+                + `<img src="${avatar_url}" alt="${full_name}" class="ghsearch__result-image"></a>`;
+        }
         html += `</div>`;
 
         html += `<div class="ghsearch__result-item-right">`;
-        html += `<div class="ghsearch__result-title"><a href="${html_url}">${full_name}</a></div>`;
+        html += `<div class="ghsearch__result-title">`
+            + `<a href="${html_url}" target="_blank">${full_name}</a></div>`;
         html += `<div class="ghsearch__result-descr">${description}</div>`;
         html += `</div>`;
 
