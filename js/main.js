@@ -19,10 +19,17 @@ function initGhsearch() {
 
 //-----------------------------
 // Отправка формы по событию submit
-function ghsearchFormSubmit(event) {
-    event.preventDefault(); 
+function ghsearchFormSubmit(event) {    
+
+    let reset = true; // новый поиск или подгрузка новой страницы
+    if (event.type == 'submit') {
+        event.preventDefault(); 
+    } 
+    else { 
+        reset = false; 
+    }
     
-    let form = event.currentTarget;
+    let form = document.getElementById('ghsearch-form');
     
     let valid = true;
     let errorMsg = '';
@@ -44,17 +51,35 @@ function ghsearchFormSubmit(event) {
         return;
     }
 
-    ghsearch(query);
-
-    ghsearchShowInfo('', 'ghsearch__info--wait'); // показываем иконку загрузки
+    ghsearch(reset, query);
 }
 
 //-----------------------------
 // Выполнить поиск асинхронно
-async function ghsearch(query) {
-    let queryURL = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&page=1`;
-    
+async function ghsearch(reset, query) {
+
+    let form = document.getElementById('ghsearch-form');
+    let resultElem = document.getElementById('ghsearch-result');
+
+    const perPage = 10;
+    let page;
+
+    if (reset) {
+        page = 1;
+        form.page.value = 1;
+        resultElem.innerHTML = '';
+    } 
+    else {
+        page = form.page.value ?? 1;
+    }
+
+    // добавляем иконку загрузки
+    ghsearchShowInfo('', 'ghsearch__info--wait'); 
+
     // делаем fetch запрос
+    let queryURL = `https://api.github.com/search/repositories?`
+        + `q=${encodeURIComponent(query)}&per_page=${perPage}&page=${page}`;
+
     let response;
     try {
         response = await fetch(queryURL);
@@ -83,68 +108,122 @@ async function ghsearch(query) {
         return false;
     }
 
-    console.log('result: ' + JSON.stringify(result, null, 2));
+    // удаляем иконку загрузки
+    ghsearchClearInfo();
 
-    // оформляем результаты
-    let html = '<ol class="ghsearch__result-list">';
+    // выводим результат
+    //console.log('result: ' + JSON.stringify(result, null, 2));
+    
+    // список OL для результатов
+    let listElem = document.getElementById('ghsearch-result-list');
+    // если не существует, создаем
+    if (!listElem) {
+        listElem = document.createElement('OL');
+        listElem.id = 'ghsearch-result-list';
+        listElem.className = 'ghsearch__result-list';
+        resultElem.prepend(listElem);
+    }
+
+    // добавляем элементы в список OL
     for (let item of result.items) {
-        /* let {
-            full_name,
-            html_url,
-            description,
-            owner: { avatar_url },
-        } = item; */
-
-        let full_name = item.full_name ?? '',
+        // получаем значение полей
+        let full_name = escapeHTML(item.full_name ?? ''),
             html_url = item.html_url ?? '',
-            description = item.description ?? '',
+            description = escapeHTML(item.description ?? ''),
             avatar_url = item.owner?.avatar_url ?? '';
 
-        html += `<li class="ghsearch__result-item">`;
-        html += `<div class="ghsearch__result-item-content">`;
-        
-        html += `<div class="ghsearch__result-item-left">`;
-        if (avatar_url && avatar_url != '') {
-            html += `<a href="${html_url}" target="_blank">`
+        // строим html содержимое LI
+        let liHTML = `<div class="ghsearch__result-item-content">`    
+        // правый блок с картинкой
+        liHTML += `<div class="ghsearch__result-item-left">`;
+        if ( avatar_url != '') {
+            liHTML += `<a href="${html_url}" target="_blank">`
                 + `<img src="${avatar_url}" alt="${full_name}" class="ghsearch__result-image"></a>`;
         }
-        html += `</div>`;
+        liHTML += `</div>`;
+        // левый блок основной
+        liHTML += `<div class="ghsearch__result-item-right">`
+            + `<div class="ghsearch__result-title">`
+            + `<a href="${html_url}" target="_blank">${full_name}</a></div>`
+            + `<div class="ghsearch__result-descr">${description}</div>`
+            + `</div>`;
+        liHTML += `</div>`;
+        
+        //создаем элемент списка
+        let itemElem = document.createElement('LI');
+        itemElem.className = 'ghsearch__result-item';
+        itemElem.innerHTML = liHTML;
 
-        html += `<div class="ghsearch__result-item-right">`;
-        html += `<div class="ghsearch__result-title">`
-            + `<a href="${html_url}" target="_blank">${full_name}</a></div>`;
-        html += `<div class="ghsearch__result-descr">${description}</div>`;
-        html += `</div>`;
-
-        html += `</div>`; //item-content
-        html += `</li>`;
+        //добавляем элемент в список
+        listElem.append(itemElem);
     }
-    html += `</ol>`;
 
-    document.getElementById('ghsearch-result').innerHTML = html;
+    // кнопка Далее
+    let moreElem = document.getElementById('ghsearch-result-more');
+    // если не существует, создаем
+    if (!moreElem) {
+        moreElem = document.createElement('DIV');
+        moreElem.id = 'ghsearch-result-more';
+        moreElem.className = 'ghsearch__result-more';
+
+        let moreBtnElem = document.createElement('BUTTON');
+        moreBtnElem.className = 'ghsearch__result-more-button button';
+        moreBtnElem.innerHTML = 'Загрузить еще';
+        moreBtnElem.addEventListener('click', ghsearchFormSubmit);
+        
+        moreElem.append(moreBtnElem);
+        resultElem.append(moreElem);
+    }
+
+    // прибавляем страницу
+    form.page.value++;
+
+    // функция добавляет информационное сообщение
+    function ghsearchShowInfo(msg, addClassName = '') {
+        // удаляем информационные сообщения
+        ghsearchClearInfo();
+        
+        // создаем новое информационное сообщение
+        let infoElem = document.createElement('DIV');
+        infoElem.textContent = msg;
+        infoElem.className = 'ghsearch__info';
+        if (addClassName != '') {
+            infoElem.classList.add(addClassName);
+        }
+        // и добавляем
+        resultElem.append(infoElem);
+    }
+
+    // функция удаляет информационные сообщения
+    function ghsearchClearInfo() {
+        Array.from(resultElem.getElementsByClassName('ghsearch__info')).forEach(e => e.remove());
+    }
 }
 
 //-----------------------------
 // Ввод на форме
 function ghsearchFormInput(event) {
     let elem = event.target;
-    if (elem.tagName == 'INPUT') { // убираем сообщение об ошибке
+    if (elem.tagName == 'INPUT') { 
+        // убираем сообщение об ошибке
         elem.classList.remove('input-text--error');
         elem.form.querySelector(`[name="${elem.name}-errormsg"]`).innerHTML = '';
     }
+
+    // удаляем кнопку Еще
+    document.getElementById('ghsearch-result-more')?.remove();
 }
 
 //-----------------------------
-// функции для показа информации 
-function ghsearchShowInfo(msg, addClassName = '') {
-    let infoElem = document.createElement('div');
-    infoElem.textContent = msg;
-    infoElem.className = 'ghsearch__info';
-    if (addClassName != '') {
-        infoElem.classList.add(addClassName);
-    }
-
-    let resultElem = document.getElementById('ghsearch-result');
-    resultElem.innerHTML = ''; // resultElem.childNodes.forEach(e => e.remove());
-    resultElem.append(infoElem);
+// Экранирование символов для вывода в html 
+function escapeHTML(str) {
+    return (
+        String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/\</g, '&lt;')
+        .replace(/\>/g, '&gt')
+    );
 }
+

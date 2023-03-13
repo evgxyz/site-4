@@ -262,22 +262,6 @@ a {
         margin-top: 20px;
     }
 
-    &__info {
-        margin: 0 auto;
-        text-align: center;
-        
-        &--wait {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            background-image: url('../images/wait.gif');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 80% auto;
-        }
-    }
-
     &__result-list {
         padding-left: 20px;
     }
@@ -320,11 +304,30 @@ a {
     &__result-descr {
         margin-top: 8px;
     }
+
+    &__result-more {
+        text-align: center;
+    }
+
+    &__info {
+        margin: 16px auto;
+        text-align: center;
+        
+        &--wait {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            background-image: url('../images/wait.gif');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 80% auto;
+        }
+    }
 }
 
 // поля
 .input-text {  
-    display: block;
     margin: 0;
     padding: 0.5em;
     font-family: $font-family-1;
@@ -357,7 +360,6 @@ a {
 }
 
 .button {  
-    display: block;
     margin: 0;
     padding: 0.5em 0.7em;
     font-family: $font-family-1;

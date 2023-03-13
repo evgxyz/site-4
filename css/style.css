@@ -186,20 +186,6 @@ a:hover {
 .ghsearch__result {
   margin-top: 20px;
 }
-.ghsearch__info {
-  margin: 0 auto;
-  text-align: center;
-}
-.ghsearch__info--wait {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  background-image: url("../images/wait.gif");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 80% auto;
-}
 .ghsearch__result-list {
   padding-left: 20px;
 }
@@ -233,9 +219,25 @@ a:hover {
 .ghsearch__result-descr {
   margin-top: 8px;
 }
+.ghsearch__result-more {
+  text-align: center;
+}
+.ghsearch__info {
+  margin: 16px auto;
+  text-align: center;
+}
+.ghsearch__info--wait {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  background-image: url("../images/wait.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% auto;
+}
 
 .input-text {
-  display: block;
   margin: 0;
   padding: 0.5em;
   font-family: Verdana, sans-serif;
@@ -266,7 +268,6 @@ a:hover {
 }
 
 .button {
-  display: block;
   margin: 0;
   padding: 0.5em 0.7em;
   font-family: Verdana, sans-serif;
