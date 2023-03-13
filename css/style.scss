@@ -1,8 +1,8 @@
 
 // ширина контента 
-$content-max-width: 900px;
+$content-max-width: 1000px;
 $content-min-width: 250px;
-$content-indent: 16px; 
+$content-indent: 20px; 
 
 // шрифт
 $font-family-1: /*'Lucida Console'*/ Verdana, sans-serif; 
@@ -19,11 +19,6 @@ $bg-color-2: #444444;
 
 $brd-color-1: #555555;
 $brd-color-2: orange;
-
-$main-menu-item-color: #ffffff;
-$main-menu-item-bg-color: #444444;
-$main-menu-item-color-hover: orange;
-$main-menu-item-bg-color-hover: #222222;
 
 $input-color-1: white;
 $input-bg-color-1: #222222;
@@ -99,100 +94,9 @@ a {
     //@include debug-border(blue); 
 }
 
-.header-body {
-    text-align: center;
-    background-color: $bg-color-0;
-
-    &__container {
-        display: flex;
-        margin: 0 auto; 
-        max-width: $content-max-width;
-        padding: 0 $content-indent;
-        background-color: $bg-color-1;
-        //border: 1px solid $brd-color-1;
-        border-radius: 20px 20px 0 0;
-        justify-content: space-between;
-        flex-wrap: wrap; 
-        column-gap: 16px; 
-    }
-    
-    &__left {
-        display: flex;
-        align-items: center;
-    }
-
-    &__right {
-        display: flex;
-        align-items: center;
-    }
-} 
- 
-.logo {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    font-size: 1rem;
-
-    &__link {
-        display: flex;
-        align-items: center;
-        color: $color-2;
-        text-decoration: none;
-
-        &:hover { 
-            text-decoration: none; 
-        }
-    }
-
-    &__image { 
-        height: 2.4em;  
-    }
-
-    &__title {
-        margin-left: 16px;
-        font-size: 1.6em;
-        font-weight: bold;
-    }
-}
-
-// основное меню в шапке
-.main-menu {
-    text-align: center;
-    font-size: 1rem;
-    background-color: $bg-color-0;
-
-    &__container {
-        display: flex;
-        margin: 0 auto; 
-        max-width: $content-max-width;
-        padding: 5px $content-indent;
-        background-color: $bg-color-1;
-        border-radius: 0 0 20px 20px;
-        border-top: 1px solid $brd-color-1;
-        justify-content: center;
-        flex-wrap: wrap; 
-        column-gap: 8px;
-        row-gap: 8px;
-    }
-
-    &__item {
-        display: inline-block;
-        padding: 5px 12px;
-        color: $main-menu-item-color;
-        background-color: $main-menu-item-bg-color;
-        
-        &:hover {
-            color: $main-menu-item-color-hover;
-            background-color: $main-menu-item-bg-color-hover;
-            text-decoration: none;
-        }
-    }
-}
-
 // main
 .main {
     display: flex;
-    margin-top: 10px;
     background-color: $bg-color-0;
 
     &__container {
@@ -200,7 +104,6 @@ a {
         max-width: $content-max-width;
         flex-grow: 1;
         background-color: $bg-color-1;
-        //border: 1px solid $brd-color-1;
         border-radius: 20px;
     } 
 }
@@ -217,7 +120,6 @@ a {
         max-width: $content-max-width;
         flex-grow: 1;
         background-color: $bg-color-1;
-        //border: 1px solid $brd-color-1;
         border-radius: 20px;
     } 
 
@@ -227,10 +129,40 @@ a {
     }
 }
 
-.ghsearch {
-    margin: 1.5rem $content-indent;
+.logo {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 1rem;
+
+    &__link {
+        display: flex;
+        align-items: center;
+        color: $color-2;
+        text-decoration: none;
+
+        &:hover { 
+            text-decoration: none; 
+        }
+    }
+
+    &__image { 
+        height: 2.8em;  
+    }
 
     &__title {
+        margin-left: 10px;
+        font-size: 1.6em;
+        font-weight: bold;
+    }
+}
+
+.ghsearch {
+    margin: 20px $content-indent;
+    margin-top: 10px;
+
+    &__title {
+        margin-bottom: 10px;
         text-align: center;
     }
 
@@ -249,8 +181,8 @@ a {
     }
 
     &__query-box { 
-        width: 70%;
-        max-width: 30rem;
+        width: 80%;
+        max-width: 40rem;
         //@include debug-border(red);
     }
 
