@@ -176,7 +176,7 @@ async function ghsearch(reset, query) {
         resultElem.append(moreElem);
     }
 
-    // прибавляем страницу
+    // инкремент номера страницы
     form.page.value++;
 
     // функция добавляет информационное сообщение (иконка загрузки или ошибка)
@@ -211,7 +211,7 @@ async function ghsearch(reset, query) {
 
     // функция удаляет информационные сообщения
     function ghsearchClearInfo() {
-        Array.from(resultElem.getElementsByClassName('ghsearch__info')).forEach(e => e.remove());
+        document.getElementById('ghsearch-info')?.remove();
     }
 }
 
