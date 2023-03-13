@@ -126,6 +126,7 @@ async function ghsearch(reset, query) {
     }
 
     // добавляем элементы в список OL
+    let firstItem = true;
     for (let item of result.items) {
         // получаем значение полей
         let full_name = escapeHTML(item.full_name ?? ''),
@@ -153,6 +154,10 @@ async function ghsearch(reset, query) {
         //создаем элемент списка
         let itemElem = document.createElement('LI');
         itemElem.className = 'ghsearch__result-item';
+        if (firstItem) {
+            itemElem.dataset.page = page;
+            firstItem = false;
+        }
         itemElem.innerHTML = liHTML;
 
         //добавляем элемент в список
@@ -178,6 +183,9 @@ async function ghsearch(reset, query) {
 
     // инкремент номера страницы
     form.page.value++;
+
+    // прокручиваем страницу к новым результатам
+    resultElem.querySelector(`li[data-page="${page}"]`)?.scrollIntoView({behavior: 'smooth'});
 
     // функция добавляет информационное сообщение (иконка загрузки или ошибка)
     function ghsearchShowInfo(msg, icon = '') {
