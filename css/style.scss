@@ -260,6 +260,17 @@ a {
             background-size: 80% auto;
         }
 
+        &--empty {
+            width: 70px;
+            height: 70px;
+            //border-radius: 50%;
+            //background-color: #ffffff; 
+            background-image: url('../images/empty.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% auto;
+        }
+
         &--warn {
             width: 96px;
             height: 96px;

@@ -186,6 +186,14 @@ a:hover {
   background-position: center center;
   background-size: 80% auto;
 }
+.ghsearch__info-icon--empty {
+  width: 70px;
+  height: 70px;
+  background-image: url("../images/empty.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+}
 .ghsearch__info-icon--warn {
   width: 96px;
   height: 96px;

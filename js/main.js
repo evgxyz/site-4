@@ -112,8 +112,13 @@ async function ghsearch(reset, query) {
     // удаляем иконку загрузки
     ghsearchClearInfo();
 
-    // выводим результат
     //console.log('result: ' + JSON.stringify(result, null, 2));
+
+    // выводим результат
+    if (result.total_count == 0) {
+        ghsearchShowInfo('Ничего не найдено', 'empty');
+        return;
+    }
     
     // список OL для результатов
     let listElem = document.getElementById('ghsearch-result-list');
@@ -203,6 +208,10 @@ async function ghsearch(reset, query) {
             let iconClass = 'ghsearch__info-icon';
             if (icon == 'loading') {
                 iconClass += ' ghsearch__info-icon--loading';
+            }
+            else 
+            if (icon == 'empty') {
+                iconClass += ' ghsearch__info-icon--empty';
             }
             else {
                 iconClass += ' ghsearch__info-icon--warn';
