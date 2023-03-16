@@ -114,12 +114,13 @@ async function ghsearch(reset, query) {
 
     //console.log('result: ' + JSON.stringify(result, null, 2));
 
-    // выводим результат
+    // если нет результатов, сообщаем
     if (result.total_count == 0) {
         ghsearchShowInfo('Ничего не найдено', 'empty');
         return;
     }
-    
+
+    // выводим результаты
     // список OL для результатов
     let listElem = document.getElementById('ghsearch-result-list');
     // если не существует, создаем
@@ -148,7 +149,7 @@ async function ghsearch(reset, query) {
                 + `<img src="${avatar_url}" alt="${full_name}" class="ghsearch__result-image"></a>`;
         }
         liHTML += `</div>`;
-        // левый блок основной
+        // левый блок 
         liHTML += `<div class="ghsearch__result-item-right">`
             + `<div class="ghsearch__result-title">`
             + `<a href="${html_url}" target="_blank">${full_name}</a></div>`
@@ -170,20 +171,22 @@ async function ghsearch(reset, query) {
     }
 
     // кнопка Далее
-    let moreElem = document.getElementById('ghsearch-result-more');
-    // если не существует, создаем
-    if (!moreElem) {
-        moreElem = document.createElement('DIV');
-        moreElem.id = 'ghsearch-result-more';
-        moreElem.className = 'ghsearch__result-more';
+    if (result.total_count > perPage) {
+        let moreElem = document.getElementById('ghsearch-result-more');
+        // если не существует, создаем
+        if (!moreElem) {
+            moreElem = document.createElement('DIV');
+            moreElem.id = 'ghsearch-result-more';
+            moreElem.className = 'ghsearch__result-more';
 
-        let moreBtnElem = document.createElement('BUTTON');
-        moreBtnElem.className = 'ghsearch__result-more-button button';
-        moreBtnElem.innerHTML = 'Загрузить еще';
-        moreBtnElem.addEventListener('click', ghsearchFormSubmit);
-        
-        moreElem.append(moreBtnElem);
-        resultElem.append(moreElem);
+            let moreBtnElem = document.createElement('BUTTON');
+            moreBtnElem.className = 'ghsearch__result-more-button button';
+            moreBtnElem.innerHTML = 'Загрузить еще';
+            moreBtnElem.addEventListener('click', ghsearchFormSubmit);
+            
+            moreElem.append(moreBtnElem);
+            resultElem.append(moreElem);
+        }
     }
 
     // инкремент номера страницы
