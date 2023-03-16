@@ -6,7 +6,16 @@ document.addEventListener('DOMContentLoaded', DOMReady);
 
 function DOMReady() {
     console.log('DOM ready');
+    initGotoTop();
     initGhsearch();
+}
+
+//-----------------------------
+// Ставим обработчик событий для кнопки goto-top
+function initGotoTop() {
+    document.getElementById('goto-top').onclick = function () {
+        window.scrollTo({top: 0, behavior: 'smooth'}) 
+    };
 }
 
 //-----------------------------

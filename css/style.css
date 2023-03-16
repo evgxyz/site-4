@@ -80,6 +80,24 @@ a:hover {
   text-align: center;
 }
 
+#goto-top {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-size: 30px;
+  color: #ffffff;
+  opacity: 0.5;
+  text-align: center;
+}
+#goto-top:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 .logo {
   display: inline-flex;
   align-items: center;
