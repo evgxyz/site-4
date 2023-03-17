@@ -71,8 +71,10 @@ a {
 // обертка флекс-колонка для опускания футера к низу страницы в случае маленькой высоты контента
 .page-wrapper {
     display: flex;
-    min-height: 100vh;
+    margin: 0 auto;
+    max-width: $content-max-width;
     min-width: $content-min-width;
+    min-height: 100vh;
     flex-direction: column;
 }
 
@@ -101,7 +103,7 @@ a {
 
     &__container {
         margin: 0 auto; 
-        max-width: $content-max-width;
+        //max-width: $content-max-width;
         flex-grow: 1;
         background-color: $bg-color-1;
         border-radius: 20px;
@@ -117,7 +119,7 @@ a {
 
     &__container {
         margin: 0 auto; 
-        max-width: $content-max-width;
+        //max-width: $content-max-width;
         flex-grow: 1;
         background-color: $bg-color-1;
         border-radius: 20px;
@@ -142,10 +144,21 @@ a {
     opacity: 0.5;
     text-align: center;
 
+    &:before {
+        content: '⇧';
+        position: relative;
+        top: 10%;
+        height: 50%;
+    }
+
     &:hover {
         opacity: 1;
         cursor: pointer;
     }
+}
+
+@media (max-width: 720px) {
+    #goto-top { display: none; } 
 }
 
 .logo {
