@@ -245,6 +245,12 @@ a {
         row-gap: 10px;
     }
 
+    @media (max-width: 600px) {
+        &__result-item-content {
+            flex-wrap: wrap; 
+        }
+    }
+
     &__result-item-left {
         flex-shrink: 1;
         //@include debug-border(red);

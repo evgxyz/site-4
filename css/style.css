@@ -179,6 +179,11 @@ a:hover {
   column-gap: 10px;
   row-gap: 10px;
 }
+@media (max-width: 600px) {
+  .ghsearch__result-item-content {
+    flex-wrap: wrap;
+  }
+}
 .ghsearch__result-item-left {
   flex-shrink: 1;
 }
